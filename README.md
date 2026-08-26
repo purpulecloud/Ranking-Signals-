@@ -12,4 +12,4 @@ How to use
 2. Copy or move these files into your cloned GitHub repo (see push commands below).
 3. Complete notebooks under notebooks/ and capstone/, then update submission/paper_url.txt with the deployed paper URL.
 
-License: MIT (see LICENSE)
+License: MIT (see LICENSE)\n<!-- ci trigger: 2026-08-26 22:26:51Z -->
