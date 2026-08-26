@@ -35,7 +35,11 @@ jobs:
           mkdir -p docs
           for nb in notebooks/*.ipynb; do
             echo "Processing $nb"
-            jupyter nbconvert --to html --execute "$nb" --output "docs/$(basename "$nb" .ipynb).html" --ExecutePreprocessor.timeout=600
+            jupyter nbconvert --to html --execute "$nb" \
+              --output "$(basename "$nb" .ipynb).html" \
+              --output-dir ./docs \
+              --ExecutePreprocessor.timeout=600 \
+              --ExecutePreprocessor.kernel_name=python3
           done
 
       - name: Create simple index
