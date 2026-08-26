@@ -33,11 +33,12 @@ jobs:
       - name: Execute notebooks and convert to HTML
         run: |
           mkdir -p docs
-          for nb in notebooks/*.ipynb; do
+          cd notebooks
+          for nb in *.ipynb; do
             echo "Processing $nb"
             jupyter nbconvert --to html --execute "$nb" \
               --output "$(basename "$nb" .ipynb).html" \
-              --output-dir ./docs \
+              --output-dir ../docs \
               --ExecutePreprocessor.timeout=600 \
               --ExecutePreprocessor.kernel_name=python3
           done
