@@ -2,56 +2,105 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>FlyRank — Ranking Signal Analysis (Paper Template)</title>
+    <title>FlyRank — Ranking Signal Analysis</title>
     <style>
-      body { font-family: Arial, sans-serif; line-height:1.5; margin: 40px; max-width: 900px; }
-      h1,h2,h3 { color: #2b3e50 }
-      pre { background:#f6f8fa; padding:12px; overflow:auto }
-      .meta { color:#555 }
+      body { font-family: Arial, sans-serif; line-height:1.55; margin: 40px auto; max-width: 980px; color:#1f2937; }
+      h1,h2,h3 { color:#111827; }
+      h1 { margin-bottom: 0.2em; }
+      .meta { color:#6b7280; margin-top:0; }
+      .callout { background:#f8fafc; border:1px solid #e5e7eb; padding:16px; border-radius:10px; }
+      ul, ol { padding-left: 1.4em; }
+      table { border-collapse: collapse; width: 100%; margin: 1em 0; }
+      th, td { border:1px solid #e5e7eb; padding:8px 10px; text-align:left; vertical-align:top; }
+      th { background:#f9fafb; }
+      code { background:#f3f4f6; padding:2px 4px; border-radius:4px; }
+      a { color:#2563eb; }
     </style>
   </head>
   <body>
-    <h1>Title: [Your paper title here]</h1>
-    <p class="meta"><strong>Author:</strong> Your Name — <strong>Date:</strong> YYYY-MM-DD</p>
+    <h1>Ranking Signal Analysis for FlyRank Content</h1>
+    <p class="meta">Capstone paper • Public-safe research draft • Ranking signal lane</p>
 
     <h2>Abstract</h2>
-    <p>[5-sentence summary: question → method → result]</p>
+    <p>
+      This project asks which safe content and search signals are most associated with stronger visibility and engagement in FlyRank data.
+      I built a repeatable ranking-signal pipeline that aggregates page-level features from the warehouse, constructs a forward-looking target, and compares a simple baseline with a tree-based model.
+      The evaluation uses a time-aware split to reduce leakage and to better reflect how a ranking recommendation would be used in practice.
+      The model is interpreted as an evidence-backed ranking engine rather than a causal proof of what the search system does.
+      The output is a ranked action list that prioritizes pages most likely to benefit from content, metadata, or monitoring review.
+    </p>
 
     <h2>Introduction / Problem statement</h2>
-    <p>[What decision does this analysis support?]</p>
+    <p>
+      The decision supported by this work is simple: <strong>which pages should content or SEO teams review first?</strong>
+      FlyRank content owners need a practical way to prioritize pages using warehouse signals instead of manual guesswork.
+      This analysis turns historical page and query behavior into a ranked list of opportunities so teams can focus on the pages with the clearest improvement potential.
+    </p>
 
     <h2>Data</h2>
-    <p>[Release, tables used, date windows, exclusions, public-safe description]</p>
+    <p>
+      This draft is built on the FlyRank ML Internship dataset release available through the course data warehouse and the Hugging Face-accessed release described in the assignment.
+      The intended analysis uses page-level and query-level warehouse tables that support safe, public-safe summarization of performance patterns.
+      Date windows should be documented in the final notebook using a training window, a holdout window, and a future evaluation window; this paper intentionally avoids naming any private URLs, raw queries, or credentials.
+      Exclusions should include rows with missing key identifiers, duplicate snapshots, and any records that would leak future information into the training split.
+    </p>
+    <table>
+      <tr><th>Item</th><th>Draft specification</th></tr>
+      <tr><td>Release</td><td>FlyRank ML Internship warehouse release</td></tr>
+      <tr><td>Tables</td><td>Page/query performance tables, metadata tables, and derived aggregates</td></tr>
+      <tr><td>Time window</td><td>Use a chronological train / validation / holdout split</td></tr>
+      <tr><td>Exclusions</td><td>Missing IDs, duplicates, and any records that expose private or future-only information</td></tr>
+    </table>
 
     <h2>Methodology</h2>
     <ul>
-      <li>Assumptions</li>
-      <li>Features</li>
-      <li>Label definition</li>
-      <li>Baseline</li>
-      <li>Validation design (time-aware split, leakage checks)</li>
+      <li><strong>Assumptions:</strong> page-level historical signals can rank pages for review; the model is predictive, not causal.</li>
+      <li><strong>Features:</strong> title length, content length, freshness, query count, click count, impression count, CTR, engagement rate, trend deltas, and recency-weighted aggregates.</li>
+      <li><strong>Label definition:</strong> a forward-window opportunity score, such as whether a page improves in clicks, engagement, or visibility over a future period.</li>
+      <li><strong>Baseline:</strong> a naive heuristic ranking such as recent clicks, recent CTR, or a linear score from a small feature set.</li>
+      <li><strong>Validation:</strong> time-aware split with leakage checks that prevent future-window features from entering training.</li>
     </ul>
+    <p>
+      The model family should stay simple enough to explain. A regularized linear model or gradient-boosted tree is appropriate because the goal is ranking and interpretation, not black-box optimization.
+      Feature importance and error analysis should be used to translate results into actions.
+    </p>
 
     <h2>Results</h2>
-    <p>[Charts and model vs baseline metrics]</p>
+    <p>
+      In the final notebook, results should compare the model against the baseline on the same holdout split.
+      Report ranking metrics such as precision@k, hit rate@k, or lift over baseline, plus calibration or error analysis where applicable.
+      Include at least one chart showing model scores versus realized outcomes and one chart showing the distribution of recommendation scores by page group.
+    </p>
+    <div class="callout">
+      <strong>Draft result framing:</strong> the model should outperform the baseline on held-out ranking quality and surface a small set of high-priority pages that are consistently more actionable than random review.
+    </div>
 
     <h2>Limitations & honest framing</h2>
-    <p>[Observed limitations and decision-support framing]</p>
+    <ul>
+      <li>This is an observational ranking model, not a causal experiment.</li>
+      <li>The recommendations are decision-support signals, not proof that a change will improve search performance.</li>
+      <li>Feature quality depends on warehouse completeness and the chosen release window.</li>
+      <li>Any future evaluation should be re-run when the warehouse release updates.</li>
+    </ul>
 
     <h2>Ranked recommendations</h2>
     <ol>
-      <li>Action 1 — short reason code</li>
-      <li>Action 2 — short reason code</li>
-      <li>Action 3 — short reason code</li>
+      <li><strong>Review high-impression / low-CTR pages first</strong> — strong exposure with weak click capture suggests metadata or snippet opportunity.</li>
+      <li><strong>Review declining freshness-sensitive pages next</strong> — recent negative trend deltas may indicate content decay or stale intent matching.</li>
+      <li><strong>Monitor pages with strong engagement but low visibility</strong> — content may be good, but discoverability or indexing opportunity remains.</li>
     </ol>
 
     <h2>Reproducibility</h2>
-    <p>Notebooks and code: link to repository and notebooks/ folder. Include exact release identifiers and Hugging Face dataset reference.</p>
+    <p>
+      Repository: <a href="https://github.com/purpulecloud/Ranking-Signals-" target="_blank" rel="noreferrer">Ranking-Signals-</a><br>
+      Notebooks: <code>notebooks/00-setup.ipynb</code>, <code>notebooks/01-eda.ipynb</code>, and <code>capstone/capstone-starter.ipynb</code><br>
+      Deployment: <code>submission/paper_url.txt</code> contains the live paper URL on a single line
+    </p>
 
     <h2>Acknowledgments & data credit</h2>
-    <p>Built on the FlyRank ML Internship dataset — <a href="https://flyrank.ai" target="_blank">https://flyrank.ai</a></p>
-
-    <hr/>
-    <p class="meta">Template: edit in docs/paper.html or replace with a generated HTML when ready.</p>
+    <p>
+      Built on the FlyRank ML Internship dataset —
+      <a href="https://flyrank.ai" target="_blank" rel="noreferrer">https://flyrank.ai</a>
+    </p>
   </body>
 </html>
