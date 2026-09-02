@@ -1,78 +1,27 @@
-﻿name: CI - Build notebooks and deploy to Pages
+name: Deploy GitHub Pages
+
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    branches:
+      - main
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.x'
-
-      - name: Install system deps & Python kernel
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y pandoc
-          python -m pip install --upgrade pip
-          pip install ipykernel notebook
-
-      - name: Install Python libs
-        run: |
-          pip install nbconvert nbformat jupyter pandas duckdb scikit-learn matplotlib
-
-      - name: Execute notebooks and convert to HTML
-        run: |
-          mkdir -p docs
-          cd notebooks
-          for nb in *.ipynb; do
-            echo "Processing $nb"
-            jupyter nbconvert --to html --execute "$nb" \
-              --output "$(basename "$nb" .ipynb).html" \
-              --output-dir ../docs \
-              --ExecutePreprocessor.timeout=600 \
-              --ExecutePreprocessor.kernel_name=python3
-          done
-
-      - name: Create simple index
-        run: |
-          cat > docs/index.html <<'HTML'
-          <!doctype html>
-          <html>
-            <head>
-              <meta charset="utf-8">
-              <title>FlyRank — Ranking Signal Analysis</title>
-            </head>
-            <body>
-              <h1>FlyRank — Ranking Signal Analysis</h1>
-              <p>Generated notebooks:</p>
-              <ul>
-              <!-- LINKS -->
-              </ul>
-            </body>
-          </html>
-          HTML
-          for f in docs/*.html; do
-            fname=$(basename "$f")
-            if [ "$fname" != "index.html" ]; then
-              sed -i "/<!-- LINKS -->/a <li><a href=\"$fname\">$fname</a></li>" docs/index.html
-            fi
-          done
-
-      - name: Deploy to gh-pages
+      - name: Deploy docs folder to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./docs
           publish_branch: gh-pages
-          user_name: 'github-actions[bot]'
-          user_email: 'github-actions[bot]@users.noreply.github.com'
+          user_name: github-actions[bot]
+          user_email: github-actions[bot]@users.noreply.github.com
