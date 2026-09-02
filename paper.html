@@ -1,57 +1,1123 @@
-<!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>FlyRank — Ranking Signal Analysis (Paper Template)</title>
-    <style>
-      body { font-family: Arial, sans-serif; line-height:1.5; margin: 40px; max-width: 900px; }
-      h1,h2,h3 { color: #2b3e50 }
-      pre { background:#f6f8fa; padding:12px; overflow:auto }
-      .meta { color:#555 }
-    </style>
-  </head>
-  <body>
-    <h1>Title: [Your paper title here]</h1>
-    <p class="meta"><strong>Author:</strong> Your Name — <strong>Date:</strong> YYYY-MM-DD</p>
+<!DOCTYPE html>
+<html lang="en">
 
-    <h2>Abstract</h2>
-    <p>[5-sentence summary: question → method → result]</p>
+<head>
 
-    <h2>Introduction / Problem statement</h2>
-    <p>[What decision does this analysis support?]</p>
+<meta charset="UTF-8">
 
-    <h2>Data</h2>
-    <p>[Release, tables used, date windows, exclusions, public-safe description]</p>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <h2>Methodology</h2>
-    <ul>
-      <li>Assumptions</li>
-      <li>Features</li>
-      <li>Label definition</li>
-      <li>Baseline</li>
-      <li>Validation design (time-aware split, leakage checks)</li>
-    </ul>
+<title>
+RefreshRank:
+Content Refresh Opportunity Scoring using Search Intelligence
+</title>
 
-    <h2>Results</h2>
-    <p>[Charts and model vs baseline metrics]</p>
+<style>
 
-    <h2>Limitations & honest framing</h2>
-    <p>[Observed limitations and decision-support framing]</p>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
 
-    <h2>Ranked recommendations</h2>
-    <ol>
-      <li>Action 1 — short reason code</li>
-      <li>Action 2 — short reason code</li>
-      <li>Action 3 — short reason code</li>
-    </ol>
+body{
 
-    <h2>Reproducibility</h2>
-    <p>Notebooks and code: link to repository and notebooks/ folder. Include exact release identifiers and Hugging Face dataset reference.</p>
+font-family:Segoe UI,Roboto,Arial,sans-serif;
 
-    <h2>Acknowledgments & data credit</h2>
-    <p>Built on the FlyRank ML Internship dataset — <a href="https://flyrank.ai" target="_blank">https://flyrank.ai</a></p>
+background:#f5f7fb;
 
-    <hr/>
-    <p class="meta">Template: edit in docs/paper.html or replace with a generated HTML when ready.</p>
-  </body>
+color:#222;
+
+line-height:1.75;
+
+}
+
+header{
+
+background:#14213d;
+
+color:white;
+
+padding:70px 20px;
+
+text-align:center;
+
+}
+
+header h1{
+
+font-size:46px;
+
+max-width:1100px;
+
+margin:auto;
+
+font-weight:700;
+
+}
+
+header p{
+
+margin-top:18px;
+
+font-size:19px;
+
+opacity:.92;
+
+}
+
+nav{
+
+position:sticky;
+
+top:0;
+
+background:white;
+
+padding:15px;
+
+display:flex;
+
+justify-content:center;
+
+gap:30px;
+
+box-shadow:0 2px 10px rgba(0,0,0,.1);
+
+z-index:100;
+
+}
+
+nav a{
+
+text-decoration:none;
+
+color:#0b57d0;
+
+font-weight:600;
+
+}
+
+.container{
+
+max-width:1200px;
+
+margin:auto;
+
+padding:50px;
+
+background:white;
+
+}
+
+section{
+
+margin-bottom:80px;
+
+}
+
+h2{
+
+margin-bottom:25px;
+
+font-size:34px;
+
+color:#14213d;
+
+border-bottom:3px solid #e6e6e6;
+
+padding-bottom:10px;
+
+}
+
+h3{
+
+margin-top:35px;
+
+margin-bottom:18px;
+
+font-size:25px;
+
+color:#1c3f78;
+
+}
+
+.abstract{
+
+background:#eef5ff;
+
+padding:35px;
+
+border-left:8px solid #2563eb;
+
+border-radius:10px;
+
+}
+
+.info{
+
+margin-top:40px;
+
+display:grid;
+
+grid-template-columns:repeat(3,1fr);
+
+gap:20px;
+
+}
+
+.card{
+
+background:#fafafa;
+
+padding:25px;
+
+border-radius:12px;
+
+box-shadow:0 2px 6px rgba(0,0,0,.08);
+
+}
+
+.card h4{
+
+margin-bottom:10px;
+
+color:#1c3f78;
+
+}
+
+table{
+
+width:100%;
+
+border-collapse:collapse;
+
+margin-top:25px;
+
+}
+
+th,td{
+
+padding:15px;
+
+border:1px solid #ddd;
+
+}
+
+th{
+
+background:#1c3f78;
+
+color:white;
+
+}
+
+figure{
+
+text-align:center;
+
+margin-top:35px;
+
+margin-bottom:35px;
+
+}
+
+figcaption{
+
+margin-top:12px;
+
+font-style:italic;
+
+color:#666;
+
+}
+
+.highlight{
+
+background:#fff9db;
+
+padding:18px;
+
+border-left:6px solid #f59e0b;
+
+margin-top:25px;
+
+margin-bottom:25px;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<h1>
+
+RefreshRank:
+A Machine Learning Framework for
+Content Refresh Opportunity Scoring
+Using FlyRank Search Intelligence Data
+
+</h1>
+
+<p>
+
+Author:
+Rangala Karthikeya
+
+<br><br>
+
+FlyRank Machine Learning Internship Capstone
+
+</p>
+
+</header>
+
+<nav>
+
+<a href="#abstract">Abstract</a>
+
+<a href="#intro">Introduction</a>
+
+<a href="#problem">Problem</a>
+
+<a href="#data">Dataset</a>
+
+<a href="#method">Methodology</a>
+
+<a href="#results">Results</a>
+
+<a href="#recommendations">Recommendations</a>
+
+<a href="#limitations">Limitations</a>
+
+<a href="#conclusion">Conclusion</a>
+
+</nav>
+
+<div class="container">
+
+<section id="abstract">
+
+<h2>Abstract</h2>
+
+<div class="abstract">
+
+<p>
+
+Search engine visibility is highly dynamic, and the performance of digital content naturally changes over time due to evolving user interests, algorithm updates, competition, and changes in search intent. For organizations managing hundreds or thousands of webpages, manually identifying which pages require updating is both time-consuming and resource-intensive. Consequently, there is increasing demand for intelligent systems capable of transforming historical search performance into practical recommendations that support editorial and SEO decision-making.
+
+</p>
+
+<br>
+
+<p>
+
+This project introduces <strong>RefreshRank</strong>, a machine learning-based content refresh opportunity scoring framework developed using the FlyRank Machine Learning Internship Warehouse. The framework integrates search performance metrics from Google Search Console (GSC), engagement metrics from Google Analytics 4 (GA4), and content metadata to estimate the likelihood that a webpage requires refreshing. Rather than predicting future traffic directly, the objective is to prioritize existing content according to its relative need for review and optimization.
+
+</p>
+
+<br>
+
+<p>
+
+A unified analytical dataset was constructed by joining content metadata with daily search performance using DuckDB over the FlyRank warehouse. Additional engineered variables—including click-through rate (CTR), content age, and days since last update—were created to better characterize content freshness and search performance. A Random Forest classifier was then trained to distinguish pages requiring refresh from those considered healthy according to transparent rule-based criteria.
+
+</p>
+
+<br>
+
+<p>
+
+The trained model generated a ranked refresh score for every content page, allowing webpages to be prioritized into high-, medium-, and low-priority categories. Feature importance analysis demonstrated that search position, impressions, and content freshness contributed most strongly to refresh decisions, while the recommendation engine transformed model predictions into actionable guidance suitable for SEO and content management teams.
+
+</p>
+
+<br>
+
+<p>
+
+Although the proposed framework serves primarily as a decision-support system rather than a fully autonomous optimization engine, it demonstrates how search intelligence data can be systematically converted into reproducible, explainable, and scalable content maintenance recommendations.
+
+</p>
+
+</div>
+
+</section>
+
+<section id="intro">
+
+<h2>1. Introduction</h2>
+
+<p>
+
+Modern search engine optimization extends beyond publishing new content. As websites mature, a significant proportion of their long-term traffic originates from previously published pages whose performance gradually evolves over time. Some pages continue to attract consistent search traffic for years, while others experience declining visibility due to outdated information, changes in user intent, increased competition, or reduced relevance within search ecosystems. Identifying which pages require maintenance therefore becomes a critical challenge for organizations operating at scale.
+
+</p>
+
+<br>
+
+<p>
+
+Traditional content auditing is typically performed manually by SEO specialists who review analytics dashboards, search console reports, and individual webpages before deciding whether a page should be updated. While effective for small websites, this approach becomes increasingly inefficient as the number of managed pages grows into the hundreds or thousands. Human review also introduces inconsistency because refresh decisions often depend upon subjective judgement rather than standardized criteria.
+
+</p>
+
+<br>
+
+<p>
+
+Recent advances in search analytics have made it possible to combine multiple sources of performance information—including impressions, clicks, rankings, user engagement, and content metadata—to better understand how webpages evolve after publication. However, transforming these heterogeneous signals into practical refresh recommendations remains a complex analytical problem. Instead of relying on isolated metrics, organizations increasingly benefit from integrated decision-support systems capable of evaluating multiple performance indicators simultaneously.
+
+</p>
+
+<br>
+
+<p>
+
+This research proposes <strong>RefreshRank</strong>, a machine learning framework designed to prioritize webpages according to their likelihood of requiring content refresh. Rather than replacing human expertise, the framework functions as an assistive analytical system that ranks pages according to evidence extracted from historical search intelligence. Such ranked recommendations allow editorial teams to focus their effort where potential impact is greatest while maintaining transparency regarding the factors influencing each recommendation.
+
+</p>
+
+</section>
+
+<section id="problem">
+
+<h2>2. Problem Statement</h2>
+
+<p>
+
+The central research question investigated throughout this study is:
+
+</p>
+
+<div class="highlight">
+
+<strong>
+
+Can search performance metrics, engagement indicators, and content metadata be combined to automatically identify webpages that should be prioritized for content refresh?
+
+</strong>
+
+</div>
+
+<p>
+
+Addressing this question requires integrating multiple sources of historical search intelligence, engineering informative features, constructing a reproducible labeling strategy, and evaluating whether supervised machine learning can effectively prioritize content according to refresh urgency. The desired outcome is not merely a binary prediction, but a ranked recommendation system capable of supporting practical content maintenance decisions.
+
+</p>
+
+</section>
+
+<section id="data">
+
+<h2>3. Dataset Description</h2>
+
+<p>
+
+The experimental evaluation presented in this study was conducted using the
+<strong>FlyRank Machine Learning Internship Warehouse</strong>, a large-scale search
+intelligence warehouse containing anonymized search performance and content
+metadata collected across multiple websites. The warehouse integrates Google
+Search Console (GSC), Google Analytics 4 (GA4), and content metadata into a
+relational analytical structure that supports large-scale SQL-based analysis.
+
+</p>
+
+<br>
+
+<p>
+
+Instead of downloading the complete warehouse locally, the analysis was
+performed using <strong>DuckDB</strong>, which queried the dataset directly from
+Hugging Face. This approach enabled efficient filtering, aggregation, and joins
+without requiring the complete dataset to reside in memory. The workflow
+followed the recommended analytical pipeline provided as part of the FlyRank
+internship resources.
+
+</p>
+
+<h3>3.1 Tables Used</h3>
+
+<table>
+
+<tr>
+
+<th>Table</th>
+
+<th>Description</th>
+
+<th>Purpose in this Study</th>
+
+</tr>
+
+<tr>
+
+<td>dim_content</td>
+
+<td>Static metadata describing each content page.</td>
+
+<td>Provided content age, update history, URL characteristics, and keyword information.</td>
+
+</tr>
+
+<tr>
+
+<td>fact_daily_sample</td>
+
+<td>Sample of daily search and engagement metrics.</td>
+
+<td>Main source for search performance and model features.</td>
+
+</tr>
+
+</table>
+
+<h3>3.2 Selected Variables</h3>
+
+<p>
+
+The final analytical dataset was constructed by joining the two tables using
+<code>content_hash_id</code>. The following variables were extracted for modelling.
+
+</p>
+
+<table>
+
+<tr>
+
+<th>Feature</th>
+
+<th>Description</th>
+
+</tr>
+
+<tr><td>gsc_impressions</td><td>Total search impressions recorded for the page.</td></tr>
+
+<tr><td>gsc_clicks</td><td>Organic clicks received from Google Search.</td></tr>
+
+<tr><td>gsc_avg_position</td><td>Average ranking position in search results.</td></tr>
+
+<tr><td>ga4_pageviews</td><td>Total page views recorded in GA4.</td></tr>
+
+<tr><td>ga4_sessions</td><td>User sessions.</td></tr>
+
+<tr><td>ga4_users</td><td>Unique users.</td></tr>
+
+<tr><td>ga4_engaged_sessions</td><td>Engaged user sessions.</td></tr>
+
+<tr><td>content_created_date</td><td>Original publication date.</td></tr>
+
+<tr><td>content_updated_date</td><td>Most recent content update.</td></tr>
+
+<tr><td>keyword_char_count</td><td>Keyword length.</td></tr>
+
+<tr><td>keyword_token_count</td><td>Keyword token count.</td></tr>
+
+<tr><td>url_char_count</td><td>URL length.</td></tr>
+
+</table>
+
+<div class="highlight">
+
+<strong>Dataset Summary</strong>
+
+<ul>
+
+<li>Master dataset created after joining content metadata with daily performance.</li>
+
+<li>50,000 observations sampled for model development.</li>
+
+<li>13 predictive features after feature engineering.</li>
+
+<li>Binary target variable: <code>refresh_needed</code>.</li>
+
+</ul>
+
+</div>
+
+</section>
+
+<section id="method">
+
+<h2>4. Methodology</h2>
+
+<h3>4.1 Data Preparation</h3>
+
+<p>
+
+Data preprocessing was performed using DuckDB SQL followed by feature
+engineering in Python. The relational structure of the warehouse enabled content
+metadata to be merged with daily search performance using
+<code>content_hash_id</code>. Only variables directly relevant to refresh prediction
+were retained, while unnecessary identifiers were excluded from the modelling
+pipeline.
+
+</p>
+
+<h3>4.2 Feature Engineering</h3>
+
+<p>
+
+Three additional variables were engineered to capture content freshness and
+search efficiency.
+
+</p>
+
+<table>
+
+<tr>
+
+<th>Feature</th>
+
+<th>Formula / Description</th>
+
+</tr>
+
+<tr>
+
+<td>CTR</td>
+
+<td>Clicks ÷ Impressions</td>
+
+</tr>
+
+<tr>
+
+<td>Content Age</td>
+
+<td>Report Date − Content Creation Date</td>
+
+</tr>
+
+<tr>
+
+<td>Days Since Update</td>
+
+<td>Report Date − Last Update Date</td>
+
+</tr>
+
+</table>
+
+<p>
+
+Missing values present in ranking and engagement metrics were replaced with
+zero where appropriate to maintain a consistent numerical feature space for the
+classifier.
+
+</p>
+
+<h3>4.3 Target Variable Construction</h3>
+
+<p>
+
+Unlike conventional supervised learning problems where manually annotated
+labels are available, no explicit refresh labels existed within the FlyRank
+warehouse. Consequently, a transparent rule-based labeling strategy was adopted.
+
+</p>
+
+<div class="highlight">
+
+A page was labelled as requiring refresh when one or more of the following
+conditions were satisfied:
+
+<ul>
+
+<li>Zero clicks despite measurable search visibility.</li>
+
+<li>Poor average search ranking.</li>
+
+<li>Content had not been updated for more than 90 days.</li>
+
+</ul>
+
+</div>
+
+<p>
+
+This deterministic labeling approach provides a reproducible approximation of
+editorial refresh decisions while maintaining complete transparency regarding
+the classification criteria.
+
+</p>
+
+<h3>4.4 Model Selection</h3>
+
+<p>
+
+A Random Forest classifier was selected because it is capable of modelling
+nonlinear relationships while remaining interpretable through feature importance
+analysis. Tree-based ensemble methods are well suited for heterogeneous search
+intelligence data containing both engagement metrics and content metadata.
+
+</p>
+
+<p>
+
+The dataset was divided into training and testing subsets using an 80:20 split.
+Stratified sampling preserved the class distribution between refresh and
+non-refresh pages.
+
+</p>
+
+<h3>4.5 Evaluation Strategy</h3>
+
+<p>
+
+Model performance was evaluated using:
+
+</p>
+
+<ul>
+
+<li>Accuracy</li>
+
+<li>Precision</li>
+
+<li>Recall</li>
+
+<li>F1-score</li>
+
+<li>Confusion Matrix</li>
+
+<li>Feature Importance Analysis</li>
+
+</ul>
+
+<p>
+
+Beyond prediction accuracy, the model was also evaluated according to its
+ability to generate ranked recommendations suitable for supporting practical
+content management decisions.
+
+</p>
+
+</section>
+
+<section id="results">
+
+<h2>5. Experimental Results</h2>
+
+<p>
+
+The Random Forest classifier successfully learned the rule-based refresh
+criteria and produced highly accurate classifications on the evaluation dataset.
+Performance metrics indicated near-perfect agreement between predicted and
+constructed labels. This outcome is expected because the target variable was
+derived deterministically from observable search performance indicators.
+
+</p>
+
+<h3>5.1 Classification Performance</h3>
+
+<figure>
+
+<img src="images/confusion_matrix.png"
+style="max-width:700px;width:100%;border:1px solid #ccc;">
+
+<figcaption>
+
+Figure 1.
+Confusion Matrix illustrating prediction performance on the evaluation dataset.
+
+</figcaption>
+
+</figure>
+
+<p>
+
+The confusion matrix demonstrates that all evaluation samples were classified
+correctly under the adopted labeling strategy, resulting in perfect precision,
+recall, and F1-score for both classes. These results indicate that the engineered
+features accurately capture the deterministic refresh rules used during target
+construction.
+
+</p>
+
+<h3>5.2 Feature Importance</h3>
+
+<figure>
+
+<img src="images/feature_importance.png"
+style="max-width:900px;width:100%;border:1px solid #ccc;">
+
+<figcaption>
+
+Figure 2.
+Relative contribution of each feature to the Random Forest classifier.
+
+</figcaption>
+
+</figure>
+
+<p>
+
+Feature importance analysis revealed that average search position, search
+impressions, and content freshness indicators were the strongest predictors of
+refresh priority. Engagement metrics contributed additional explanatory power,
+while keyword and URL characteristics exhibited comparatively smaller
+influence.
+
+</p>
+
+<h3>5.3 Top Predictive Features</h3>
+
+<p>
+
+Table 1 presents the most influential variables identified by the Random Forest
+classifier. The ranking indicates that search visibility and content freshness
+contributed most strongly to determining refresh priority. These findings are
+consistent with common SEO practices, where declining rankings and outdated
+content frequently motivate editorial updates.
+
+</p>
+
+<table>
+
+<tr>
+
+<th>Rank</th>
+
+<th>Feature</th>
+
+<th>Importance</th>
+
+</tr>
+
+<tr><td>1</td><td>Average Search Position</td><td>0.289</td></tr>
+
+<tr><td>2</td><td>Search Impressions</td><td>0.269</td></tr>
+
+<tr><td>3</td><td>Days Since Last Update</td><td>0.236</td></tr>
+
+<tr><td>4</td><td>Content Age</td><td>0.073</td></tr>
+
+<tr><td>5</td><td>Search Clicks</td><td>0.038</td></tr>
+
+<tr><td>6</td><td>Click Through Rate (CTR)</td><td>0.035</td></tr>
+
+<tr><td>7</td><td>GA4 Sessions</td><td>0.014</td></tr>
+
+<tr><td>8</td><td>GA4 Pageviews</td><td>0.014</td></tr>
+
+<tr><td>9</td><td>GA4 Users</td><td>0.010</td></tr>
+
+<tr><td>10</td><td>Keyword Token Count</td><td>0.008</td></tr>
+
+</table>
+
+</section>
+
+<section id="recommendations">
+
+<h2>6. Ranked Recommendations</h2>
+
+<p>
+
+The final objective of this study was not merely to classify webpages but to
+produce an actionable ranking that content teams can use to prioritize review
+activities. Rather than assigning a binary decision alone, the model generated a
+continuous refresh probability score for every content page. These probabilities
+were transformed into operational priority levels, enabling content managers to
+allocate editorial resources more effectively.
+
+</p>
+
+<h3>6.1 Priority Levels</h3>
+
+<table>
+
+<tr>
+
+<th>Priority</th>
+
+<th>Meaning</th>
+
+<th>Recommended Action</th>
+
+</tr>
+
+<tr>
+
+<td><strong>High</strong></td>
+
+<td>Very high predicted refresh probability.</td>
+
+<td>Immediate editorial review and content update.</td>
+
+</tr>
+
+<tr>
+
+<td><strong>Medium</strong></td>
+
+<td>Moderate likelihood of declining performance.</td>
+
+<td>Review metadata, headings, internal links, and monitor future performance.</td>
+
+</tr>
+
+<tr>
+
+<td><strong>Low</strong></td>
+
+<td>Currently healthy content.</td>
+
+<td>No immediate intervention required. Continue routine monitoring.</td>
+
+</tr>
+
+</table>
+
+<h3>6.2 Practical Workflow</h3>
+
+<p>
+
+The recommendation engine developed in this project can support a practical
+content maintenance workflow:
+
+</p>
+
+<ol>
+
+<li>Collect recent search performance from the FlyRank warehouse.</li>
+
+<li>Engineer search and freshness features.</li>
+
+<li>Generate refresh probability scores using the trained classifier.</li>
+
+<li>Sort webpages according to predicted refresh priority.</li>
+
+<li>Allow SEO specialists to review only the highest-priority pages first.</li>
+
+</ol>
+
+<p>
+
+This prioritization strategy enables organizations to reduce manual auditing
+effort while ensuring that limited editorial resources are focused on the pages
+most likely to benefit from improvement.
+
+</p>
+
+</section>
+
+<section id="limitations">
+
+<h2>7. Limitations</h2>
+
+<p>
+
+Although the proposed framework demonstrates the feasibility of automated
+refresh opportunity scoring, several limitations should be acknowledged.
+
+</p>
+
+<ul>
+
+<li>
+
+The target variable was generated using transparent rule-based criteria rather
+than manually annotated editorial decisions. Consequently, the classifier
+primarily learns to reproduce these predefined rules.
+
+</li>
+
+<li>
+
+The development process used the <strong>fact_daily_sample</strong> table rather than
+the complete warehouse to reduce experimentation time. Future work could train
+and validate the model on the full dataset.
+
+</li>
+
+<li>
+
+The reported performance should not be interpreted as evidence of causal
+relationships between individual features and search performance. The model
+identifies statistical associations useful for decision support.
+
+</li>
+
+<li>
+
+Search rankings are influenced by many external factors that are not represented
+within the available dataset, including competitor activity, algorithm updates,
+content quality, and broader market trends.
+
+</li>
+
+<li>
+
+Recommendations generated by the model should therefore be viewed as decision
+support rather than fully automated editorial decisions.
+
+</li>
+
+</ul>
+
+<div class="highlight">
+
+<strong>
+
+The perfect evaluation metrics observed in this study arise because the target
+label was deterministically constructed from observable search performance
+signals. The classifier therefore reproduces the predefined labeling strategy
+rather than predicting independently annotated human decisions.
+
+</strong>
+
+</div>
+
+</section>
+
+<section id="conclusion">
+
+<h2>8. Conclusion</h2>
+
+<p>
+
+This project presented <strong>RefreshRank</strong>, a machine learning framework for
+ranking webpages according to their likelihood of requiring content refresh.
+Using search intelligence data from the FlyRank Internship Warehouse, content
+metadata was integrated with search performance and engagement metrics to build
+a unified analytical dataset suitable for supervised learning.
+
+</p>
+
+<p>
+
+Feature engineering transformed raw search statistics into meaningful indicators
+such as click-through rate, content age, and update recency. A Random Forest
+classifier was subsequently trained to estimate refresh priority and produce a
+ranked recommendation list that supports SEO and editorial decision-making.
+
+</p>
+
+<p>
+
+Experimental results demonstrated that search visibility and content freshness
+are the dominant factors influencing refresh recommendations. Although the
+current implementation relies on rule-based target construction, the overall
+framework establishes a scalable foundation that could be extended using expert
+annotations, future performance windows, or more advanced learning approaches.
+
+</p>
+
+<p>
+
+Overall, the study illustrates how search intelligence data can be converted
+into a transparent, reproducible, and practical decision-support system capable
+of assisting content teams in prioritizing website maintenance activities.
+
+</p>
+
+</section>
+
+<section>
+
+<h2>9. Reproducibility</h2>
+
+<p>
+
+All experiments were implemented in Python using DuckDB for analytical SQL,
+Pandas and NumPy for data manipulation, Matplotlib for visualization, and
+Scikit-learn for machine learning. Data access was performed directly through
+the Hugging Face-hosted FlyRank Internship Warehouse.
+
+</p>
+
+<p>
+
+The accompanying GitHub repository contains:
+
+</p>
+
+<ul>
+
+<li>Data loading notebook</li>
+
+<li>Exploratory data analysis</li>
+
+<li>Feature engineering</li>
+
+<li>Random Forest training pipeline</li>
+
+<li>Recommendation generation</li>
+
+<li>Research paper source</li>
+
+</ul>
+
+</section>
+
+<section>
+
+<h2>10. Acknowledgments</h2>
+
+<p>
+
+This project was completed as part of the <strong>FlyRank Machine Learning
+Internship</strong>. The work makes use of the FlyRank Internship Warehouse, which
+provides anonymized search intelligence data for educational and research
+purposes.
+
+</p>
+
+<p>
+
+Built on the FlyRank ML Internship Dataset —
+<a href="https://flyrank.ai" target="_blank">https://flyrank.ai</a>
+
+</p>
+
+</section>
+
+<section>
+
+<h2>References</h2>
+
+<ol>
+
+<li>Breiman, L. (2001). Random Forests. Machine Learning.</li>
+
+<li>Pedregosa et al. (2011). Scikit-learn: Machine Learning in Python.</li>
+
+<li>DuckDB Foundation. DuckDB Documentation.</li>
+
+<li>Google Search Central Documentation.</li>
+
+<li>Google Analytics 4 Documentation.</li>
+
+<li>FlyRank Machine Learning Internship Resources.</li>
+
+</ol>
+
+</section>
+
+<footer style="margin-top:80px;padding:40px;text-align:center;border-top:1px solid #ddd;color:#666;">
+
+<p>
+
+© 2026 Rangala Karthikeya
+
+</p>
+
+<p>
+
+FlyRank Machine Learning Internship Capstone
+
+</p>
+
+</footer>
+
+</div>
+
+</body>
+
 </html>
